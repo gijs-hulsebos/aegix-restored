@@ -22,3 +22,6 @@ Burner wallets separate the immediate payment sender from the main wallet. Publi
 ## Local data
 
 Wallets, API keys, recovery backups, `.env.local`, generated output and transaction data are intentionally excluded. Keep the storage key and encrypted data together in a private backup. This repository contains only Aegix; no video or Remotion project is included.
+
+Hosted deployments: see [DEPLOYMENT.md](DEPLOYMENT.md). The default route now opens the landing page; use /dashboard for the app. Vercel requires separately hosted gateway URLs for payments.
+

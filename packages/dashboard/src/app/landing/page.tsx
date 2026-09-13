@@ -14,7 +14,7 @@ export default function LandingPage() {
   const router = useRouter();
 
   const handleLaunchApp = () => {
-    router.push('/');
+    router.push('/dashboard');
   };
 
   return (

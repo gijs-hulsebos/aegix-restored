@@ -193,7 +193,7 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 });
 
 // Start server
-app.listen(Number(PORT), '127.0.0.1', () => {
+app.listen(Number(PORT), process.env.HOST || '127.0.0.1', () => {
   const payai = getPayAIFacilitator();
   const payaiInfo = payai.getInfo();
   

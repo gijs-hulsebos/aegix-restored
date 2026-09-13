@@ -16,7 +16,9 @@ async function session(){
   if(sessionPromise)return sessionPromise;
   if(!owner||!signer)throw Error('Connect your wallet to access your Aegix pool');
   sessionPromise=(async()=>{
-    const challenge=await nativeFetch('/api/gateway/auth/challenge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({owner})}).then(r=>r.json());
+    const challengeResponse=await nativeFetch('/api/gateway/auth/challenge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({owner})});
+    const challenge=await challengeResponse.json();
+    if(!challengeResponse.ok || typeof challenge.message !== 'string' || !challenge.message.trim() || typeof challenge.nonce !== 'string') throw Error(challenge.error || 'The gateway did not return a valid signing challenge');
     const signed=await signer!(new TextEncoder().encode(challenge.message));
     const result=await nativeFetch('/api/gateway/auth/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nonce:challenge.nonce,signature:btoa(String.fromCharCode(...Array.from(signed)))})}).then(r=>r.json());
     if(!result.token)throw Error(result.error||'Wallet authorization failed');token=result.token;return token;

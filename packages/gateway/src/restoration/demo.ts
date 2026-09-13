@@ -17,4 +17,4 @@ app.get('/api/credits/resources',(_req,res)=>res.json({success:true,data:[],simu
 app.post('/api/agents/register',(req,res)=>{const a={id:randomUUID(),owner:req.body.owner,name:req.body.name,status:'active',privacyLevel:'standard',spent24h:'0',totalSpent:'0',apiCalls:0,createdAt:new Date().toISOString(),lastActivity:new Date().toISOString(),apiKey:'demo-no-signing-authority'};agents.push(a);response(res,a);});
 app.get('/api/agents/:owner',(_req,res)=>res.json({success:true,data:agents,simulated:true}));
 app.use((_req,res)=>res.status(409).json({success:false,error:'This action is not available in demo mode; no blockchain transaction was sent',simulated:true}));
-app.listen(Number(process.env.PORT||3705),'127.0.0.1',()=>console.log('Original Aegix demo backend ready'));
+app.listen(Number(process.env.PORT||3705),process.env.HOST || '127.0.0.1',()=>console.log('Original Aegix demo backend ready'));

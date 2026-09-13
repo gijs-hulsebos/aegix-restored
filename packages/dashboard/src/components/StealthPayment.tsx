@@ -451,6 +451,8 @@ export default function StealthPayment({
     setError(null);
     
     try {
+      const health = await fetch(GATEWAY_URL+'/health');
+      if (!health.ok) throw new Error('The selected payment gateway is offline or not configured.');
       const message = `AEGIX_POOL_AUTH::${publicKey.toBase58()}::${Date.now()}`;
       const encodedMessage = new TextEncoder().encode(message);
       const signature = await signMessage(encodedMessage);
